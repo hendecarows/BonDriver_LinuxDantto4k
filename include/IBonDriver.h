@@ -1,0 +1,39 @@
+// IBonDriver.h: IBonDriver クラスのインターフェイス
+//
+//////////////////////////////////////////////////////////////////////
+
+#if !defined(_IBONDRIVER_H_)
+#define _IBONDRIVER_H_
+
+#if _MSC_VER > 1000
+#pragma once
+#endif // _MSC_VER > 1000
+
+#include <cstdint>
+
+// 凡ドライバインタフェース
+class IBonDriver
+{
+public:
+	virtual const bool OpenTuner(void) = 0;
+	virtual void CloseTuner(void) = 0;
+
+	virtual const bool SetChannel(const std::uint8_t bCh) = 0;
+	virtual const float GetSignalLevel(void) = 0;
+
+	virtual const std::uint32_t WaitTsStream(const std::uint32_t dwTimeOut = 0) = 0;
+	virtual const std::uint32_t GetReadyCount(void) = 0;
+
+	virtual const bool GetTsStream(std::uint8_t *pDst, std::uint32_t *pdwSize, std::uint32_t *pdwRemain) = 0;
+	virtual const bool GetTsStream(std::uint8_t **ppDst, std::uint32_t *pdwSize, std::uint32_t *pdwRemain) = 0;
+
+	virtual void PurgeTsStream(void) = 0;
+
+	virtual void Release(void) = 0;
+};
+
+
+// インスタンス生成メソッド
+//extern "C" __declspec(dllimport) IBonDriver* CreateBonDriver();
+
+#endif // !defined(_IBONDRIVER_H_)
