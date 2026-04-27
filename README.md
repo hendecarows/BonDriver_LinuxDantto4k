@@ -1,8 +1,7 @@
 # BonDriver_LinuxDantto4k
 
-リアルタイムで MMTS の復号化 と MPEG-2 TS への変換を行う Linux 版 BonDriver です。
-[dantto4k][link_dantto4k] に同梱されている Windows 版 [BonDriver_dantto4k.dll][link_bondriver_dantto4k] の
-Linux 実装に相当します。
+[dantto4k][link_dantto4k] を使用して、MMTS (MMT/TLV) から MPEG-2 TS へのリアルタイム変換を行う
+Linux 版 BonDriver です。Windows 版 BonDriver_dantto4k.dll を Linux 環境へ移植しました。
 
 ## ビルド
 
@@ -17,10 +16,10 @@ cd BonDriver_LinuxDantto4k
 git submodule update --init --recursive
 ```
 
-#### tsduck
+#### TSDuck のインストール
 
-dantto4k のビルドには [TSDuck][link_tsduck] が必要です。通常はソースからビルドしますが、
-Ubuntu 用 .deb パッケージを利用することも可能です。
+dantto4k 関係のビルドに [TSDuck][link_tsduck] が必要です。
+dantto4k のインストール手順に従い、システムにインストールします。
 
 ```bash
 cd thirdparty/dantto4k/thirdparty/tsduck
@@ -29,15 +28,7 @@ make -j
 sudo make install
 ```
 
-パッケージは以下にあります。[リンク先][link_tsduck_release]の最新のバージョン番号に置き換えてください。
-
-```bash
-wget https://github.com/tsduck/tsduck/releases/download/vX.XX-XXXX/tsduck_X.XX-XXXX.ubuntuXX_amd64.deb
-wget https://github.com/tsduck/tsduck/releases/download/vX.XX-XXXX/tsduck-dev_X.XX-XXXX.ubuntuXX_amd64.deb
-sudo apt install ./tsduck_X.XX-XXXX.ubuntuYY_amd64.deb ./tsduck-dev_X.XX-XXXX.ubuntuXX_amd64.deb
-```
-
-#### BonDriver_LinuxDantto4k
+#### BonDriver_LinuxDantto4k のビルド
 
 cmake の手順に従ってビルドします。
 
@@ -160,9 +151,7 @@ sudo systemctl restart edcb.service
 [MIT License][link_mit]
 
 [link_dantto4k]: https://github.com/nekohkr/dantto4k
-[link_bondriver_dantto4k]: https://github.com/nekohkr/dantto4k#bondriver_dantto4kdll
 [link_tsduck]: https://github.com/tsduck/tsduck
-[link_tsduck_release]: https://github.com/tsduck/tsduck/releases
 [link_pt4k]: https://www.newptx.com/
 [link_edcb]: https://github.com/xtne6f/EDCB
 [link_tbs6812_drv]: https://github.com/otya128/tbs6812_drv
