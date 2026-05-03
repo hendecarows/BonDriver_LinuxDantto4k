@@ -17,12 +17,12 @@
 class IBonDriver2 : public IBonDriver
 {
 public:
-	virtual const std::uint16_t *GetTunerName(void) = 0;
+	virtual const char16_t *GetTunerName(void) = 0;
 
 	virtual const bool IsTunerOpening(void) = 0;
 
-	virtual const std::uint16_t *EnumTuningSpace(const std::uint32_t dwSpace) = 0;
-	virtual const std::uint16_t *EnumChannelName(const std::uint32_t dwSpace, const std::uint32_t dwChannel) = 0;
+	virtual const char16_t *EnumTuningSpace(const std::uint32_t dwSpace) = 0;
+	virtual const char16_t *EnumChannelName(const std::uint32_t dwSpace, const std::uint32_t dwChannel) = 0;
 
 	virtual const bool SetChannel(const std::uint32_t dwSpace, const std::uint32_t dwChannel) = 0;
 

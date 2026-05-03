@@ -46,12 +46,12 @@ public:
 	void Release(void) override;
 
 	// IBonDriver2
-	const std::uint16_t *GetTunerName(void) override;
+	const char16_t *GetTunerName(void) override;
 
 	const bool IsTunerOpening(void) override;
 
-	const std::uint16_t *EnumTuningSpace(const std::uint32_t dwSpace) override;
-	const std::uint16_t *EnumChannelName(const std::uint32_t dwSpace, const std::uint32_t dwChannel) override;
+	const char16_t *EnumTuningSpace(const std::uint32_t dwSpace) override;
+	const char16_t *EnumChannelName(const std::uint32_t dwSpace, const std::uint32_t dwChannel) override;
 
 	const bool SetChannel(const std::uint32_t dwSpace, const std::uint32_t dwChannel) override;
 

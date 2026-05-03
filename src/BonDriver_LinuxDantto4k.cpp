@@ -267,7 +267,7 @@ void BonDriver::Release(void)
 	DestroyInstance();
 }
 
-const std::uint16_t *BonDriver::GetTunerName(void)
+const char16_t *BonDriver::GetTunerName(void)
 {
 	return bondriver2_->GetTunerName();
 }
@@ -279,12 +279,12 @@ const bool BonDriver::IsTunerOpening(void)
 	return bondriver2_->IsTunerOpening();
 }
 
-const std::uint16_t *BonDriver::EnumTuningSpace(const std::uint32_t dwSpace)
+const char16_t *BonDriver::EnumTuningSpace(const std::uint32_t dwSpace)
 {
 	return bondriver2_->EnumTuningSpace(dwSpace);
 }
 
-const std::uint16_t *BonDriver::EnumChannelName(const std::uint32_t dwSpace, const std::uint32_t dwChannel)
+const char16_t *BonDriver::EnumChannelName(const std::uint32_t dwSpace, const std::uint32_t dwChannel)
 {
 	return bondriver2_->EnumChannelName(dwSpace, dwChannel);
 }
