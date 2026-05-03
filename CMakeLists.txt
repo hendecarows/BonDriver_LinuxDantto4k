@@ -164,13 +164,6 @@ target_compile_options(
 	-msse4.1
 )
 
-# target_compile_definitions(
-# 	${PROJECT_NAME}
-# 	PRIVATE
-# 	PLOG_OMIT_LOG_DEFINES
-# 	# PCSCLITE_NO_PCSC_TYPEDEFS
-# )
-
 # Link Library
 target_link_libraries(
 	${PROJECT_NAME}
