@@ -9,7 +9,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include <cstdint>
+#include <stdint.h>
 #include "IBonDriver.h"
 
 
@@ -21,13 +21,13 @@ public:
 
 	virtual const bool IsTunerOpening(void) = 0;
 
-	virtual const char16_t *EnumTuningSpace(const std::uint32_t dwSpace) = 0;
-	virtual const char16_t *EnumChannelName(const std::uint32_t dwSpace, const std::uint32_t dwChannel) = 0;
+	virtual const char16_t *EnumTuningSpace(const uint32_t dwSpace) = 0;
+	virtual const char16_t *EnumChannelName(const uint32_t dwSpace, const uint32_t dwChannel) = 0;
 
-	virtual const bool SetChannel(const std::uint32_t dwSpace, const std::uint32_t dwChannel) = 0;
+	virtual const bool SetChannel(const uint32_t dwSpace, const uint32_t dwChannel) = 0;
 
-	virtual const std::uint32_t GetCurSpace(void) = 0;
-	virtual const std::uint32_t GetCurChannel(void) = 0;
+	virtual const uint32_t GetCurSpace(void) = 0;
+	virtual const uint32_t GetCurChannel(void) = 0;
 
 // IBonDriver
 	virtual void Release(void) = 0;

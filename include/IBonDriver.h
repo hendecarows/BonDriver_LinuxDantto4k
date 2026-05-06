@@ -9,7 +9,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include <cstdint>
+#include <stdint.h>
 
 // 凡ドライバインタフェース
 class IBonDriver
@@ -18,14 +18,14 @@ public:
 	virtual const bool OpenTuner(void) = 0;
 	virtual void CloseTuner(void) = 0;
 
-	virtual const bool SetChannel(const std::uint8_t bCh) = 0;
+	virtual const bool SetChannel(const uint8_t bCh) = 0;
 	virtual const float GetSignalLevel(void) = 0;
 
-	virtual const std::uint32_t WaitTsStream(const std::uint32_t dwTimeOut = 0) = 0;
-	virtual const std::uint32_t GetReadyCount(void) = 0;
+	virtual const uint32_t WaitTsStream(const uint32_t dwTimeOut = 0) = 0;
+	virtual const uint32_t GetReadyCount(void) = 0;
 
-	virtual const bool GetTsStream(std::uint8_t *pDst, std::uint32_t *pdwSize, std::uint32_t *pdwRemain) = 0;
-	virtual const bool GetTsStream(std::uint8_t **ppDst, std::uint32_t *pdwSize, std::uint32_t *pdwRemain) = 0;
+	virtual const bool GetTsStream(uint8_t *pDst, uint32_t *pdwSize, uint32_t *pdwRemain) = 0;
+	virtual const bool GetTsStream(uint8_t **ppDst, uint32_t *pdwSize, uint32_t *pdwRemain) = 0;
 
 	virtual void PurgeTsStream(void) = 0;
 

@@ -6,7 +6,9 @@
 
 #include "BonDriver_LinuxDantto4k.hpp"
 
-#include <iostream>
+#include <stdint.h>
+#include <unistd.h>
+#include <dlfcn.h>
 
 #include <cassert>
 #include <cstddef>
@@ -16,15 +18,11 @@
 #include <string>
 #include <utility>
 
-#include <unistd.h>
-#include <dlfcn.h>
-
 #include <plog/Log.h>
 #include <plog/Initializers/ConsoleInitializer.h>
 #include <plog/Formatters/FuncMessageFormatter.h>
 
 #include "acasHandler.h"
-
 #include "runtime_error.hpp"
 
 namespace BonDriver_LinuxDantto4k {
@@ -172,7 +170,7 @@ void BonDriver::CloseTuner(void)
 	}
 }
 
-const bool BonDriver::SetChannel(const std::uint8_t bCh)
+const bool BonDriver::SetChannel(const uint8_t bCh)
 {
 	return SetChannel(0, bCh);
 }
@@ -182,17 +180,17 @@ const float BonDriver::GetSignalLevel(void)
 	return bondriver2_->GetSignalLevel();
 }
 
-const std::uint32_t BonDriver::WaitTsStream(const std::uint32_t dwTimeOut)
+const uint32_t BonDriver::WaitTsStream(const uint32_t dwTimeOut)
 {
 	return bondriver2_->WaitTsStream(dwTimeOut);
 }
 
-const std::uint32_t BonDriver::GetReadyCount(void)
+const uint32_t BonDriver::GetReadyCount(void)
 {
 	return bondriver2_->GetReadyCount();
 }
 
-const bool BonDriver::GetTsStream(std::uint8_t *pDst, std::uint32_t *pdwSize, std::uint32_t *pdwRemain)
+const bool BonDriver::GetTsStream(uint8_t *pDst, uint32_t *pdwSize, uint32_t *pdwRemain)
 {
 	if (!is_mmts_to_ts_enabled_) {
 		return bondriver2_->GetTsStream(pDst, pdwSize, pdwRemain);
@@ -207,7 +205,7 @@ const bool BonDriver::GetTsStream(std::uint8_t *pDst, std::uint32_t *pdwSize, st
 	return code;
 }
 
-const bool BonDriver::GetTsStream(std::uint8_t **ppDst, std::uint32_t *pdwSize, std::uint32_t *pdwRemain)
+const bool BonDriver::GetTsStream(uint8_t **ppDst, uint32_t *pdwSize, uint32_t *pdwRemain)
 {
 	std::lock_guard<std::mutex> lock(mtx_);
 
@@ -243,7 +241,7 @@ const bool BonDriver::GetTsStream(std::uint8_t **ppDst, std::uint32_t *pdwSize, 
 	output_buffer_ = std::move(remux_output_);
 
 	*ppDst = output_buffer_.data();
-	*pdwSize = static_cast<std::uint32_t>(output_buffer_.size());
+	*pdwSize = static_cast<uint32_t>(output_buffer_.size());
 	*pdwRemain = 0;
 
 	return true;
@@ -279,17 +277,17 @@ const bool BonDriver::IsTunerOpening(void)
 	return bondriver2_->IsTunerOpening();
 }
 
-const char16_t *BonDriver::EnumTuningSpace(const std::uint32_t dwSpace)
+const char16_t *BonDriver::EnumTuningSpace(const uint32_t dwSpace)
 {
 	return bondriver2_->EnumTuningSpace(dwSpace);
 }
 
-const char16_t *BonDriver::EnumChannelName(const std::uint32_t dwSpace, const std::uint32_t dwChannel)
+const char16_t *BonDriver::EnumChannelName(const uint32_t dwSpace, const uint32_t dwChannel)
 {
 	return bondriver2_->EnumChannelName(dwSpace, dwChannel);
 }
 
-const bool BonDriver::SetChannel(const std::uint32_t dwSpace, const std::uint32_t dwChannel)
+const bool BonDriver::SetChannel(const uint32_t dwSpace, const uint32_t dwChannel)
 {
 	PLOGV << __func__;
 	PLOGD << "dwSpace = " << dwSpace << " dwChannel = " << dwChannel;
@@ -321,12 +319,12 @@ const bool BonDriver::SetChannel(const std::uint32_t dwSpace, const std::uint32_
 	return code;
 }
 
-const std::uint32_t BonDriver::GetCurSpace(void)
+const uint32_t BonDriver::GetCurSpace(void)
 {
 	return bondriver2_-> GetCurSpace();
 }
 
-const std::uint32_t BonDriver::GetCurChannel(void)
+const uint32_t BonDriver::GetCurChannel(void)
 {
 	return bondriver2_-> GetCurChannel();
 }
