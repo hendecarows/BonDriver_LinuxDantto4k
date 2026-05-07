@@ -20,8 +20,8 @@ inline constexpr std::string_view SEPARATOR = ", \t";
 std::string_view LTrim(std::string_view str, std::string_view sep = WHITE_SPACE);
 std::string_view RTrim(std::string_view str, std::string_view sep = WHITE_SPACE);
 std::string_view Trim(std::string_view str, std::string_view sep = WHITE_SPACE);
-std::string ToLower(std::string_view str, std::string_view sep = WHITE_SPACE);
-std::string ToUpper(std::string_view str, std::string_view sep = WHITE_SPACE);
+std::string ToLower(std::string_view str);
+std::string ToUpper(std::string_view str);
 void Separate(std::string_view str, std::vector<std::string> &res, std::string_view sep = SEPARATOR);
 std::vector<std::string> Split(std::string_view str, std::string_view sep = SEPARATOR);
 
