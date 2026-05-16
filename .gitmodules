@@ -1,6 +1,0 @@
-[submodule "thirdparty/dantto4k"]
-	path = thirdparty/dantto4k
-	url = https://github.com/nekohkr/dantto4k.git
-[submodule "thirdparty/plog"]
-	path = thirdparty/plog
-	url = https://github.com/SergiusTheBest/plog.git
