@@ -2,14 +2,16 @@
 
 #pragma once
 
-#include <cstdint>
+#include <stdint.h>
+
 #include <filesystem>
 #include <format>
 #include <stdexcept>
 #include <string>
 #include <source_location>
 
-namespace BonDriver_LinuxDantto4k {
+namespace BonDriver_LinuxDantto4k
+{
 
 class RuntimeError : public std::runtime_error {
 public:
