@@ -10,10 +10,6 @@ Linux 版 BonDriver です。Windows 版 BonDriver_dantto4k.dll を Linux 環境
 ```bash
 sudo apt update
 sudo apt install build-essential cmake libssl-dev libpcsclite-dev pcscd pkgconf dvb-tools
-
-git clone https://github.com/hendecarows/BonDriver_LinuxDantto4k.git
-cd BonDriver_LinuxDantto4k
-git submodule update --init --recursive
 ```
 
 #### TSDuck のインストール
@@ -22,10 +18,12 @@ dantto4k 関係のビルドに [TSDuck][link_tsduck] が必要です。
 dantto4k のインストール手順に従い、システムにインストールします。
 
 ```bash
-cd thirdparty/dantto4k/thirdparty/tsduck
+git clone https://github.com/nekohkr/dantto4k.git
+cd dantto4k/thirdparty/tsduck
 scripts/install-prerequisites.sh
 make -j
 sudo make install
+cd ../../..
 ```
 
 #### BonDriver_LinuxDantto4k のビルド
@@ -33,9 +31,9 @@ sudo make install
 cmake の手順に従ってビルドします。
 
 ```bash
+git clone https://github.com/hendecarows/BonDriver_LinuxDantto4k.git
 cd BonDriver_LinuxDantto4k
-mkdir build
-cd build
+mkdir build && cd build
 cmake ..
 make -j
 ```

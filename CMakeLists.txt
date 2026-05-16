@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.16)
 
 # Project name
 project(BonDriver_LinuxDantto4k LANGUAGES CXX)
@@ -17,10 +17,25 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 endif()
 
 # Other Library
-add_subdirectory(thirdparty/plog)
-
-# Package
 set(THREADS_PREFER_PTHREAD_FLAG ON)
+
+include(FetchContent)
+
+FetchContent_Declare(
+	plog
+	GIT_REPOSITORY https://github.com/SergiusTheBest/plog
+	GIT_TAG        1.1.11
+	GIT_SHALLOW    true
+)
+FetchContent_MakeAvailable(plog)
+
+FetchContent_Declare(
+	dantto4k
+	GIT_REPOSITORY https://github.com/nekohkr/dantto4k
+	GIT_TAG        v1.0.1
+)
+FetchContent_MakeAvailable(dantto4k)
+
 find_package(Threads REQUIRED)
 find_package(PkgConfig REQUIRED)
 
@@ -28,110 +43,111 @@ pkg_check_modules(TSDUCK REQUIRED IMPORTED_TARGET tsduck)
 pkg_check_modules(PCSCLITE REQUIRED IMPORTED_TARGET libpcsclite)
 
 # library
+set(DANTTO4K_DIR build/_deps/dantto4k-src)
 add_library(
 	${PROJECT_NAME}
 	SHARED
 	src/BonDriver_LinuxDantto4k.cpp
-	thirdparty/dantto4k/src/acasCard.cpp
-	thirdparty/dantto4k/src/acasHandler.cpp
-	thirdparty/dantto4k/src/accessControlDescriptor.cpp
-	thirdparty/dantto4k/src/adtsConverter.cpp
-	thirdparty/dantto4k/src/aes.cpp
-	thirdparty/dantto4k/src/aribEncoder.cpp
-	thirdparty/dantto4k/src/aribUtil.cpp
-	thirdparty/dantto4k/src/b24Color.cpp
-	thirdparty/dantto4k/src/b24SubtitleConvertor.cpp
-	thirdparty/dantto4k/src/caMessage.cpp
-	thirdparty/dantto4k/src/casProxyClient.cpp
-	thirdparty/dantto4k/src/compressedIPPacket.cpp
-	thirdparty/dantto4k/src/config.cpp
-	thirdparty/dantto4k/src/contentCopyControlDescriptor.cpp
-	thirdparty/dantto4k/src/damt.cpp
-	thirdparty/dantto4k/src/dantto4k.cpp
-	thirdparty/dantto4k/src/dataTransmissionMessage.cpp
-	thirdparty/dantto4k/src/dataUnit.cpp
-	thirdparty/dantto4k/src/dcct.cpp
-	thirdparty/dantto4k/src/ddmt.cpp
-	thirdparty/dantto4k/src/ecm.cpp
-	thirdparty/dantto4k/src/emt.cpp
-	thirdparty/dantto4k/src/eventPackageDescriptor.cpp
-	thirdparty/dantto4k/src/extensionHeaderScrambling.cpp
-	thirdparty/dantto4k/src/fragmentAssembler.cpp
-	thirdparty/dantto4k/src/indexItem.cpp
-	thirdparty/dantto4k/src/ipv6.cpp
-	thirdparty/dantto4k/src/m2SectionMessage.cpp
-	thirdparty/dantto4k/src/m2ShortSectionMessage.cpp
-	thirdparty/dantto4k/src/mhAit.cpp
-	thirdparty/dantto4k/src/mhApplicationBoundaryAndPermissionDescriptor.cpp
-	thirdparty/dantto4k/src/mhApplicationDescriptor.cpp
-	thirdparty/dantto4k/src/mhAudioComponentDescriptor.cpp
-	thirdparty/dantto4k/src/mhAutostartPriorityDescriptor.cpp
-	thirdparty/dantto4k/src/mhBit.cpp
-	thirdparty/dantto4k/src/mhBroadcasterNameDescriptor.cpp
-	thirdparty/dantto4k/src/mhCaContractInformation.cpp
-	thirdparty/dantto4k/src/mhCacheControlInfoDescriptor.cpp
-	thirdparty/dantto4k/src/mhCdt.cpp
-	thirdparty/dantto4k/src/mhContentDescriptor.cpp
-	thirdparty/dantto4k/src/mhDataComponentDescriptor.cpp
-	thirdparty/dantto4k/src/mhEit.cpp
-	thirdparty/dantto4k/src/mhEventGroupDescriptor.cpp
-	thirdparty/dantto4k/src/mhExtendedEventDescriptor.cpp
-	thirdparty/dantto4k/src/mhExternalApplicationControlDescriptor.cpp
-	thirdparty/dantto4k/src/mhLinkageDescriptor.cpp
-	thirdparty/dantto4k/src/mhLogoTransmissionDescriptor.cpp
-	thirdparty/dantto4k/src/mhParentalRatingDescriptor.cpp
-	thirdparty/dantto4k/src/mhRandomizedLatencyDescriptor.cpp
-	thirdparty/dantto4k/src/mhSdt.cpp
-	thirdparty/dantto4k/src/mhSeriesDescriptor.cpp
-	thirdparty/dantto4k/src/mhServiceDescriptor.cpp
-	thirdparty/dantto4k/src/mhServiceListDescriptor.cpp
-	thirdparty/dantto4k/src/mhShortEventDescriptor.cpp
-	thirdparty/dantto4k/src/mhSiParameterDescriptor.cpp
-	thirdparty/dantto4k/src/mhSimpleApplicationLocationDescriptor.cpp
-	thirdparty/dantto4k/src/mhStreamIdentificationDescriptor.cpp
-	thirdparty/dantto4k/src/mhTot.cpp
-	thirdparty/dantto4k/src/mhTransportProtocolDescriptor.cpp
-	thirdparty/dantto4k/src/mmtDescriptorFactory.cpp
-	thirdparty/dantto4k/src/mmtDescriptors.cpp
-	thirdparty/dantto4k/src/mmtGeneralLocationInfo.cpp
-	thirdparty/dantto4k/src/mmtStream.cpp
-	thirdparty/dantto4k/src/mmtTableFactory.cpp
-	thirdparty/dantto4k/src/mmtTlvDemuxer.cpp
-	thirdparty/dantto4k/src/mmtp.cpp
-	thirdparty/dantto4k/src/mpt.cpp
-	thirdparty/dantto4k/src/mpu.cpp
-	thirdparty/dantto4k/src/mpuApplicationProcessor.cpp
-	thirdparty/dantto4k/src/mpuAudioProcessor.cpp
-	thirdparty/dantto4k/src/mpuExtendedTimestampDescriptor.cpp
-	thirdparty/dantto4k/src/mpuProcessorFactory.cpp
-	thirdparty/dantto4k/src/mpuSubtitleProcessor.cpp
-	thirdparty/dantto4k/src/mpuTimestampDescriptor.cpp
-	thirdparty/dantto4k/src/mpuVideoProcessor.cpp
-	thirdparty/dantto4k/src/multimediaServiceInformationDescriptor.cpp
-	thirdparty/dantto4k/src/networkNameDescriptor.cpp
-	thirdparty/dantto4k/src/nit.cpp
-	thirdparty/dantto4k/src/ntp.cpp
-	thirdparty/dantto4k/src/paMessage.cpp
-	thirdparty/dantto4k/src/pesPacket.cpp
-	thirdparty/dantto4k/src/plt.cpp
-	thirdparty/dantto4k/src/pugixml.cpp
-	thirdparty/dantto4k/src/relatedBroadcasterDescriptor.cpp
-	thirdparty/dantto4k/src/remoteControlKeyDescriptor.cpp
-	thirdparty/dantto4k/src/remuxerHandler.cpp
-	thirdparty/dantto4k/src/serviceListDescriptor.cpp
-	thirdparty/dantto4k/src/signalingMessage.cpp
-	thirdparty/dantto4k/src/smartCard.cpp
-	thirdparty/dantto4k/src/stream.cpp
-	thirdparty/dantto4k/src/systemManagementDescriptor.cpp
-	thirdparty/dantto4k/src/timeUtil.cpp
-	thirdparty/dantto4k/src/timebase.cpp
-	thirdparty/dantto4k/src/tlv.cpp
-	thirdparty/dantto4k/src/tlvDescriptorFactory.cpp
-	thirdparty/dantto4k/src/tlvDescriptors.cpp
-	thirdparty/dantto4k/src/tlvTableFactory.cpp
-	thirdparty/dantto4k/src/transmissionControlSignal.cpp
-	thirdparty/dantto4k/src/ttml.cpp
-	thirdparty/dantto4k/src/videoComponentDescriptor.cpp
+	${DANTTO4K_DIR}/src/acasCard.cpp
+	${DANTTO4K_DIR}/src/acasHandler.cpp
+	${DANTTO4K_DIR}/src/accessControlDescriptor.cpp
+	${DANTTO4K_DIR}/src/adtsConverter.cpp
+	${DANTTO4K_DIR}/src/aes.cpp
+	${DANTTO4K_DIR}/src/aribEncoder.cpp
+	${DANTTO4K_DIR}/src/aribUtil.cpp
+	${DANTTO4K_DIR}/src/b24Color.cpp
+	${DANTTO4K_DIR}/src/b24SubtitleConvertor.cpp
+	${DANTTO4K_DIR}/src/caMessage.cpp
+	${DANTTO4K_DIR}/src/casProxyClient.cpp
+	${DANTTO4K_DIR}/src/compressedIPPacket.cpp
+	${DANTTO4K_DIR}/src/config.cpp
+	${DANTTO4K_DIR}/src/contentCopyControlDescriptor.cpp
+	${DANTTO4K_DIR}/src/damt.cpp
+	${DANTTO4K_DIR}/src/dantto4k.cpp
+	${DANTTO4K_DIR}/src/dataTransmissionMessage.cpp
+	${DANTTO4K_DIR}/src/dataUnit.cpp
+	${DANTTO4K_DIR}/src/dcct.cpp
+	${DANTTO4K_DIR}/src/ddmt.cpp
+	${DANTTO4K_DIR}/src/ecm.cpp
+	${DANTTO4K_DIR}/src/emt.cpp
+	${DANTTO4K_DIR}/src/eventPackageDescriptor.cpp
+	${DANTTO4K_DIR}/src/extensionHeaderScrambling.cpp
+	${DANTTO4K_DIR}/src/fragmentAssembler.cpp
+	${DANTTO4K_DIR}/src/indexItem.cpp
+	${DANTTO4K_DIR}/src/ipv6.cpp
+	${DANTTO4K_DIR}/src/m2SectionMessage.cpp
+	${DANTTO4K_DIR}/src/m2ShortSectionMessage.cpp
+	${DANTTO4K_DIR}/src/mhAit.cpp
+	${DANTTO4K_DIR}/src/mhApplicationBoundaryAndPermissionDescriptor.cpp
+	${DANTTO4K_DIR}/src/mhApplicationDescriptor.cpp
+	${DANTTO4K_DIR}/src/mhAudioComponentDescriptor.cpp
+	${DANTTO4K_DIR}/src/mhAutostartPriorityDescriptor.cpp
+	${DANTTO4K_DIR}/src/mhBit.cpp
+	${DANTTO4K_DIR}/src/mhBroadcasterNameDescriptor.cpp
+	${DANTTO4K_DIR}/src/mhCaContractInformation.cpp
+	${DANTTO4K_DIR}/src/mhCacheControlInfoDescriptor.cpp
+	${DANTTO4K_DIR}/src/mhCdt.cpp
+	${DANTTO4K_DIR}/src/mhContentDescriptor.cpp
+	${DANTTO4K_DIR}/src/mhDataComponentDescriptor.cpp
+	${DANTTO4K_DIR}/src/mhEit.cpp
+	${DANTTO4K_DIR}/src/mhEventGroupDescriptor.cpp
+	${DANTTO4K_DIR}/src/mhExtendedEventDescriptor.cpp
+	${DANTTO4K_DIR}/src/mhExternalApplicationControlDescriptor.cpp
+	${DANTTO4K_DIR}/src/mhLinkageDescriptor.cpp
+	${DANTTO4K_DIR}/src/mhLogoTransmissionDescriptor.cpp
+	${DANTTO4K_DIR}/src/mhParentalRatingDescriptor.cpp
+	${DANTTO4K_DIR}/src/mhRandomizedLatencyDescriptor.cpp
+	${DANTTO4K_DIR}/src/mhSdt.cpp
+	${DANTTO4K_DIR}/src/mhSeriesDescriptor.cpp
+	${DANTTO4K_DIR}/src/mhServiceDescriptor.cpp
+	${DANTTO4K_DIR}/src/mhServiceListDescriptor.cpp
+	${DANTTO4K_DIR}/src/mhShortEventDescriptor.cpp
+	${DANTTO4K_DIR}/src/mhSiParameterDescriptor.cpp
+	${DANTTO4K_DIR}/src/mhSimpleApplicationLocationDescriptor.cpp
+	${DANTTO4K_DIR}/src/mhStreamIdentificationDescriptor.cpp
+	${DANTTO4K_DIR}/src/mhTot.cpp
+	${DANTTO4K_DIR}/src/mhTransportProtocolDescriptor.cpp
+	${DANTTO4K_DIR}/src/mmtDescriptorFactory.cpp
+	${DANTTO4K_DIR}/src/mmtDescriptors.cpp
+	${DANTTO4K_DIR}/src/mmtGeneralLocationInfo.cpp
+	${DANTTO4K_DIR}/src/mmtStream.cpp
+	${DANTTO4K_DIR}/src/mmtTableFactory.cpp
+	${DANTTO4K_DIR}/src/mmtTlvDemuxer.cpp
+	${DANTTO4K_DIR}/src/mmtp.cpp
+	${DANTTO4K_DIR}/src/mpt.cpp
+	${DANTTO4K_DIR}/src/mpu.cpp
+	${DANTTO4K_DIR}/src/mpuApplicationProcessor.cpp
+	${DANTTO4K_DIR}/src/mpuAudioProcessor.cpp
+	${DANTTO4K_DIR}/src/mpuExtendedTimestampDescriptor.cpp
+	${DANTTO4K_DIR}/src/mpuProcessorFactory.cpp
+	${DANTTO4K_DIR}/src/mpuSubtitleProcessor.cpp
+	${DANTTO4K_DIR}/src/mpuTimestampDescriptor.cpp
+	${DANTTO4K_DIR}/src/mpuVideoProcessor.cpp
+	${DANTTO4K_DIR}/src/multimediaServiceInformationDescriptor.cpp
+	${DANTTO4K_DIR}/src/networkNameDescriptor.cpp
+	${DANTTO4K_DIR}/src/nit.cpp
+	${DANTTO4K_DIR}/src/ntp.cpp
+	${DANTTO4K_DIR}/src/paMessage.cpp
+	${DANTTO4K_DIR}/src/pesPacket.cpp
+	${DANTTO4K_DIR}/src/plt.cpp
+	${DANTTO4K_DIR}/src/pugixml.cpp
+	${DANTTO4K_DIR}/src/relatedBroadcasterDescriptor.cpp
+	${DANTTO4K_DIR}/src/remoteControlKeyDescriptor.cpp
+	${DANTTO4K_DIR}/src/remuxerHandler.cpp
+	${DANTTO4K_DIR}/src/serviceListDescriptor.cpp
+	${DANTTO4K_DIR}/src/signalingMessage.cpp
+	${DANTTO4K_DIR}/src/smartCard.cpp
+	${DANTTO4K_DIR}/src/stream.cpp
+	${DANTTO4K_DIR}/src/systemManagementDescriptor.cpp
+	${DANTTO4K_DIR}/src/timeUtil.cpp
+	${DANTTO4K_DIR}/src/timebase.cpp
+	${DANTTO4K_DIR}/src/tlv.cpp
+	${DANTTO4K_DIR}/src/tlvDescriptorFactory.cpp
+	${DANTTO4K_DIR}/src/tlvDescriptors.cpp
+	${DANTTO4K_DIR}/src/tlvTableFactory.cpp
+	${DANTTO4K_DIR}/src/transmissionControlSignal.cpp
+	${DANTTO4K_DIR}/src/ttml.cpp
+	${DANTTO4K_DIR}/src/videoComponentDescriptor.cpp
 )
 
 # Standards
@@ -151,8 +167,8 @@ target_include_directories(
 	PRIVATE
 	include
 	src
-	thirdparty/dantto4k/src
-	thirdparty/dantto4k/thirdparty/asio/asio/include
+	${DANTTO4K_DIR}/src
+	${DANTTO4K_DIR}/thirdparty/asio/asio/include
 )
 
 # Compile Options
